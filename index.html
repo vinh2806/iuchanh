@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12/dist/gsap.min.js"></script>
+    <title>Document</title>
+    
+</head>
+
+<body>
+    
+    <svg class="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" x="0" y="0">
+        <defs>
+          <!-- Thanks to LegoMushroom for the emboss filter !!-->
+          <filter id='emboss' x="-50%" y="-50%" width="150%" height="150%">
+            <feOffset in="SourceAlpha" dx="0.16666666666666666" dy="0.8333333333333334" result="17"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="17" result="18"></feGaussianBlur>
+            <feSpecularLighting surfaceScale="1" specularConstant="0.9" specularExponent="15" in="18" result="19">
+              <fePointLight x="-1000" y="-5000" z="300"></fePointLight>
+            </feSpecularLighting>
+            <feComposite in="19" in2="SourceAlpha" operator="in" result="20"></feComposite>
+            <feOffset in="SourceAlpha" dx="-0.16666666666666666" dy="-0.8333333333333334" result="21"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="21" result="22"></feGaussianBlur>
+            <feSpecularLighting surfaceScale="1" specularConstant="1.8" specularExponent="8" in="22" result="23">
+              <fePointLight x="100" y="5000" z="300"></fePointLight>
+            </feSpecularLighting>
+            <feComposite in="23" in2="SourceAlpha" operator="in" result="24"></feComposite>
+            <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .85 0" in="24" result="25"></feColorMatrix>
+            <feComposite k1="0" k2="0.8" k3="0.5" k4="0" in="20" in2="25" operator="arithmetic" result="26"></feComposite>
+            <feMerge in="26" result="27">
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+              <feMergeNode in="26"></feMergeNode>
+            </feMerge>
+          </filter>
+          <linearGradient id="grad1">
+            <stop id="gr1s" offset="0" stop-color="#fdfbfc" />
+            <stop id="gr1e" offset=".99" stop-color="#f9f1f4" />
+          </linearGradient>
+        </defs>
+        <g id="flower" transform-origin="center">
+        </g>
+        <g id="hearts"></g>
+        <text x="200" y="155" class="yesorno" font-size="14" opacity=".7" fill="whitesmoke" text-anchor="middle"> Chanh cọ iu anh kh?</text>
+      
+        <g id="bigh" transform="translate (-400 -144) scale(2.5 2.2)">
+          <path id="yesheart" fill="red" filter="url(#emboss)" class="ppy" d="m 200, 160 V153 C186, 145, 180, 127, 190 121 Q 196 118 200 129 Q 203 118 209 121 C 220 127 214 145 200 153 " />
+        </g>
+        <g id="brokenh" transform="translate (-200 -144) scale(2.5 2.2)">
+          <path id="leftbr" fill="red" filter="url(#emboss)" class="ppx" d="M 200 153 C 186 145 180 127 190 121 Q 196 118 200 129 L 201 133 L 199 137 L 201 141 L 200 146 L 201 149 L 200 153 Z  " />
+          <path id="rightbr" fill="red" class="ppx" transform="rotate(1 200 153)" filter="url(#emboss)" d="M 200 153 L 201 149 L 200 146 L 201 141 L 199 137 L 201 133 L 200 129 Q 203 118 209 121 C 220 127 214 145 200 153z " />
+        </g>
+        <rect x="40" y="322" width="350" height="120" fill="#333" />
+        
+      </svg>
+      
+    
+<script>
+    hoverlistens();
+    
+    document.querySelector(".ppy").onclick = function () {
+      gsap.to(".ppy", 2, { x: "-=400" });
+      gsap.to(".ppx", 2, { x: "+=400" });
+      gsap.to(".yesorno", 2, { y: "+=200" });
+      flower();
+      heartFire();
+    };
+    
+    document.querySelector(".ppx").onclick = function () {
+      gsap.to(".ppy", 2, { attr: { fill: "#333" }, x: "-=400" });
+      gsap.to("#rightbr", {
+        duration: 3,
+        attr: { transform: "rotate(18 200 153)" }
+      });
+      gsap.to("#leftbr", {
+        duration: 1,
+        attr: { transform: "rotate(-1 200 153)" }
+      });
+      gsap.to(".yesorno", 2, { y: "+=200" });
+    };
+    function flower() {
+      let hslh = Math.floor(Math.random() * 360);
+      let hincr = Math.floor(Math.random() * 24);
+      let hincr3 = Math.floor(Math.random() * 12);
+      hslh = 325;
+      let hslh2 = hslh + hincr;
+      if (hslh2 > 360) {
+        hslh2 -= 360;
+      }
+      let hslh3 = hslh2 + hincr3;
+      if (hslh3 > 360) {
+        hslh3 -= 360;
+      }
+      let hslcol = "hsl(" + hslh + ", 85%, 65%)";
+      let hslcol3 = "hsl(" + hslh2 + ", 91%, 61% )";
+      document.getElementById("gr1s").setAttribute("stop-color", hslcol);
+      document.getElementById("gr1e").setAttribute("stop-color", hslcol3);
+      let pathd =
+        "M 200, 160 V153 C186, 145, 180, 127, 190 121 Q 196 118 200 129 Q 203 118 209 121 C 220 127 214 145 200 153Z ";
+      drawHearts(pathd, 0, 360, 90, "petal");
+      pathd =
+        " m 200 160 V 158 C 186 145 180 127 190 125 Q 196 124 200 131 Q 205 124 210 125 C 220 127 214 145 200 158z ";
+      drawHearts(pathd, 45, 375, 90, "petal2");
+      pathd =
+        "M 200 160 C 189 146 190 132 197 134 Q 200 135 200 142 Q 200 135 203 134 C 210 132 211 146 200 160Z";
+      drawHearts(pathd, 0, 330, 30, "petal3");
+      let newEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      newEl.setAttribute("x", 200);
+      newEl.setAttribute("y", 160);
+      newEl.setAttribute("font-size", ".5");
+      newEl.setAttribute("opacity", ".1");
+      newEl.setAttribute("id", "loveyou");
+      newEl.setAttribute("text-anchor", "middle");
+    
+      newEl.textContent = "Dinh cum iu chanh <3 !";
+      newEl.style.fill = "whitesmoke";
+      document.getElementById("flower").appendChild(newEl);
+    
+      let tt1 = gsap.timeline();
+      tt1
+        .to(".petal", {
+          attr: { fill: hslcol, stroke: "whitesmoke" },
+          delay: 0.5,
+          stagger: 0.2
+        })
+        .to(".petal2", { attr: { fill: "url(#grad1)" }, stagger: 0.2 })
+        .to(".petal3", { attr: { fill: hslcol3 }, stagger: 0.1 })
+        .add(fire, 10);
+    
+      gsap.set("#loveyou", { fontSize: 6, delay: 6 });
+      gsap.to("#loveyou", 6, { attr: { opacity: 1 }, delay: 5, ease: "none" });
+      gsap.to("#flower", 5, {
+        attr: { transform: "scale(6)" },
+        delay: 5,
+        ease: "none"
+      });
+    }
+    
+    function drawHearts(pathd, starti, endi, incri, petal) {
+      for (var i = starti; i <= endi; i += incri) {
+        let newEl = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        let rota = "  rotate( " + i + ", 200, 160) ";
+        newEl.setAttribute("d", pathd);
+        newEl.setAttribute("transform", rota);
+        newEl.setAttribute("fill", "none");
+        newEl.setAttribute("class", petal);
+        newEl.setAttribute("filter", "url(#emboss)");
+        newEl.setAttribute("stroke", "none");
+        newEl.setAttribute("stroke-width", ".02");
+        document.getElementById("flower").appendChild(newEl);
+      }
+    }
+    
+    function heartFire() {
+      const vfadd = document.getElementById("hearts");
+      let fragv = document.createDocumentFragment();
+      let vfcolors = ["orange", "gold", "yellow", "red", "pink", "gold", "red"];
+      for (var i = 0; i < 350; i++) {
+        let x1 = Math.floor(Math.random() * 80);
+        let y1 = Math.floor(Math.random() * 40);
+        let s1 = Math.floor(Math.random() * 7) + 1;
+        y1 += 330;
+        x1 += 160;
+        let ar = [];
+        ar[0] = x1 - 3;
+        ar[1] = y1 - 1;
+        ar[2] = x1 - 4;
+        ar[3] = y1 - 4.6;
+        ar[4] = x1 - 2;
+        ar[5] = y1 - 5.8;
+        ar[6] = x1 - 0.8;
+        ar[7] = y1 - 6.4;
+        ar[8] = x1;
+        ar[9] = y1 - 4.2;
+        ar[10] = x1 + 0.6;
+        ar[11] = y1 - 6.4;
+        ar[12] = x1 + 1.8;
+        ar[13] = y1 - 5.8;
+        ar[14] = x1 + 4;
+        ar[15] = y1 - 4.6;
+        ar[16] = x1 + 3;
+        ar[17] = y1 - 1;
+        ar[18] = x1;
+        ar[19] = y1;
+        let path =
+          "M" +
+          x1 +
+          "," +
+          y1 +
+          " C " +
+          ar[0] +
+          "," +
+          ar[1] +
+          "," +
+          ar[2] +
+          "," +
+          ar[3] +
+          "," +
+          ar[4] +
+          "," +
+          ar[5] +
+          " Q " +
+          ar[6] +
+          "," +
+          ar[7] +
+          "," +
+          ar[8] +
+          "," +
+          ar[9] +
+          " Q " +
+          ar[10] +
+          "," +
+          ar[11] +
+          "," +
+          ar[12] +
+          "," +
+          ar[13] +
+          " C " +
+          ar[14] +
+          "," +
+          ar[15] +
+          "," +
+          ar[16] +
+          "," +
+          ar[17] +
+          "," +
+          ar[18] +
+          "," +
+          ar[19] +
+          "Z";
+        let s3 = s1 * 0.1;
+        let s2 = s3 + 0.2;
+        s1 -= 1;
+        let ae = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        ae.setAttribute("d", path);
+        ae.style.fill = vfcolors[s1];
+        ae.setAttribute("id", "vfc" + i);
+        fragv.appendChild(ae);
+      }
+      vfadd.appendChild(fragv);
+    }
+    
+    function fire() {
+      for (var i = 0; i < 350; i++) {
+        let fireid = "#vfc" + i;
+        let x1 = Math.round(3 + Math.random() * 190);
+        if (x1 % 2 == 0) {
+          x1 *= -1;
+        }
+        let y1 = Math.round(20 + Math.random() * 350);
+        y1 *= -1;
+        gsap.to(fireid, {
+          duration: "random(.5 1)",
+          x: x1,
+          y: y1,
+          opacity: 0,
+          repeat: 5
+        });
+      }
+    }
+    
+    function hoverlistens() {
+      document.querySelector(".ppy").addEventListener(
+        "mouseenter",
+        (ev) => {
+          gsap.to("#yesheart", {
+            duration: 0.5,
+            scale: 1.05,
+            yoyo: true,
+            repeat: 4
+          });
+        },
+        { once: true }
+      );
+      document.querySelector(".ppx").addEventListener(
+        "mouseenter",
+        (ev) => {
+          gsap.to("#rightbr", {
+            duration: 0.5,
+            attr: { transform: "rotate(4 200 153)" },
+            yoyo: true,
+            repeat: 4
+          });
+        },
+        { once: true }
+      );
+    }
+    
+    </script>
+</body>
+</html>
